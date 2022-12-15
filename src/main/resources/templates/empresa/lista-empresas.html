@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+    <div th:replace="fragments/jsScripts :: scripts"></div>
+<nav th:replace="fragments/header :: nav"></nav>
+
+        <div class="container">
+            <div class="row mb-2 pt-5">
+                <div class="col">
+                <h1 class="pb-3 ">EMPRESAS CADASTRADAS</h1>
+                <div th:replace="fragments/mensagens :: mensagens-empresas"></div>
+
+
+
+                <div class="row mb-5">
+                    <div class="col" th:each="emp : ${empresas}">
+                        <div class="card"  th:id="@{|deleta-card-id-${emp.id}|}">
+                        <div class="card-body">
+                            
+                          <h5 class="card-title"><span th:text="${emp.id}"></span> - <span th:text="${emp.nome}"></span></h5>
+                          <p class="card-text"><b>E-mail: </b><span th:text="${emp.email}"></span></p>
+                          <p class="card-text"><b>Telefone: </b><span th:text="${emp.telefone}"></span></p>
+                          <p class="card-text"><b>Rua: </b><span th:text="${emp.endereco.logradouro}"></span></p>
+                          <p class="card-text"><b>N: </b><span th:text="${emp.endereco.numero}"></span></p>
+    
+                          <td><a style="text-decoration: none; color:blue"
+                            th:href="@{/empresas/editar-empresa/{id}(id=${emp.id})}"
+                            class="editBtn" data-toggle="tooltip"
+                            data-placement="right" title="Editar">
+                            <i class="fa fa-edit"></i>Editar</a>
+
+                            <a data-bs-toggle="modal" id="remove-link" data-bs-target="#delete-empresa-modal" 
+                            th:onclick="'setRowIndexAndUserId(this, ' + ${emp.id} + ')'" 
+                            style="text-decoration: none; color:red">
+                                <i class="fa fa-times" aria-hidden="true"></i>Excluir</a>
+
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                 </div>
+                </div>
+            <div th:replace="fragments/deleteUserModal :: delete-empresa-modal"></div>
+            <div class="row pb-5">
+                <div class="col">
+                    <a th:href="@{/empresas/cadastrar-empresa}" >
+                        <button type="button" class="btn btn-success">Nova empresa</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+<footer th:replace="fragments/footer :: footer"></footer>
+
+
+
+</body>
+</html>

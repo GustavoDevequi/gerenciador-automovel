@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+        <div class="container">
+            <div class="row mb-2 pt-5">
+                <div class="col">
+                <h1 class="pb-3">CARROS CADASTRADOS</h1>
+                <div th:replace="fragments/mensagens :: mensagens-carros"></div>
+                
+                <div class="row mb-5">
+                <div class="col" th:each="carro : ${carros}">
+                    <div class="card"  th:id="@{|deleta-card-id-${carro.id}|}">
+                    <div class="card-body">
+                        
+                      <h5 class="card-title"><span th:text="${carro.id}"></span> - <span th:text="${carro.nome}"></span></h5>
+                      <p class="card-text"><b>Descrição: </b><span th:text="${carro.descricao}"></span></p>
+                      <p class="card-text"><b>Valor do Veículo: </b><span th:text="${carro.preco}"></span></p>
+                      <p class="card-text"><b>Marca: </b><span th:text="${carro.marca.nome}"></span></p>
+
+                      <a style="text-decoration: none; color:blue"
+                        th:href="@{/carros/editar-carro/{id}(id=${carro.id})}"
+                        class="editBtn" data-toggle="tooltip"
+                        data-placement="right" title="Editar">
+                        <i class="fa fa-edit"></i>Editar</a>
+
+                        <a data-bs-toggle="modal" id="remove-link" data-bs-target="#delete-carro-modal" 
+                        th:onclick="'setRowIndexAndUserId(this, ' + ${carro.id} + ')'" 
+                        style="text-decoration: none; color:red">
+                        <i class="fa fa-times" aria-hidden="true"></i>Excluir</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+            </div>
+            <div th:replace="fragments/deleteUserModal :: delete-carro-modal"></div>
+            <div class="row pb-5">
+                <div class="col">
+                    <a th:href="@{/carros/cadastrar-carro}" >
+                        <button type="button" class="btn btn-outline-danger">Novo carro</button>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<div th:replace="fragments/jsScripts :: scripts"></div>
+
+</body>
+</html>

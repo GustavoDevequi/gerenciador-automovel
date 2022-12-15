@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-light p-0">
+        <div class="container-fluid">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <p class="navbar-text pb-0 ps-1 fw-bold" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" > Bem vindo:  <span sec:authentication="name" class="pe-1 "></span></p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" th:href="@{/login}" href="/login" sec:authorize="!isAuthenticated()">
+                    <i class="align-self-center fa fa-user-o text-white" aria-hidden="true"></i> Login</a> 
+                </li>
+    
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" th:href="@{/register}" href="/register" sec:authorize="!isAuthenticated()">Cadastre-se</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-end fw-bold" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" href="javascript: document.logoutForm.submit()" role="menuitem"> Sair</a>
+                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                        <input hidden type="submit" value="Sign Out"/>
+                    </form>
+                </li>
+            </ul>
+        </div>
+      </nav>
+
+    <nav class="navbar navbar-expand-lg bg-azul">
+        <div class="container pt-3 pb-3">
+            <img class="pe-5" src="../images/logo-teste.png" width="400px" alt="...">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link text-white fw-bold " th:href="@{/index}" href="/index" sec:authorize="hasRole('ROLE_ADMIN')">INICIAL <span class="sr-only">(current)</span></a>
+
+                
+                    
+                <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link dropdown-toggle text-white fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        EMPRESA
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/empresas/lista-empresas}" href="/empresas/lista-empresas"> LISTA EMPRESAS</a></li>
+                        <li><a class="dropdown-item" th:href="@{/empresas/cadastrar-empresa}">CADASTRAR EMPRESA</a></li>
+                    </ul>
+                </li>   
+
+                <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link dropdown-toggle text-white fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        MARCAS
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/marcas/lista-marcas}" href="/marca/lista-marcas"> LISTAR MARCAS</a></li>
+                        <li><a class="dropdown-item" th:href="@{/marcas/cadastrar-marca}">CADASTRAR MARCA</a></li>
+                    </ul>
+                </li>  
+
+                <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link dropdown-toggle text-white fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        CARRO
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item"  th:href="@{/carros/lista-carros}"> LISTAR CARROS</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/carros/cadastrar-carro}">CADASTRAR CARRO</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/categorias/lista-categorias}">LISTAR CATEGORIA</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/categorias/cadastrar-categoria}">CADASTRAR CATEGORIA</a></li>
+                    </ul>
+                </li>  
+                <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link dropdown-toggle text-white fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        USUÁRIOS
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/adminPage}" >LISTAR USUÁRIOS</a></li>
+                        <li><a class="dropdown-item" th:href="@{/adminPage/roles}" >LISTAR PERMISSÕES</a></li>
+                        <li><a class="dropdown-item" th:href="@{/adminPage/users/newUser}" >CADASTRAR USUÁRIO</a></li>
+                    </ul>
+                </li> 
+            </div>
+          </div>
+        </div>
+      </nav>
+
+    <div th:replace="fragments/jsScripts :: scripts"></div>
+</body>
+</html>
